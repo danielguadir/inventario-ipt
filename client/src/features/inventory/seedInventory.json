@@ -1,0 +1,10 @@
+[
+  { "id":"pc-001", "grupo":"Equipos de cómputo", "serial":"HP-ABC-001", "tipo":"equipo", "marca":"HP", "disco":"SSD 512", "estado":"Operativo", "ubicacion":"Cali - Sede 1" },
+  { "id":"pc-002", "grupo":"Equipos de cómputo", "serial":"LN-XYZ-002", "tipo":"equipo", "marca":"Lenovo", "disco":"SSD 256", "estado":"Mantenimiento", "ubicacion":"Cali - Sede 2" },
+
+  { "id":"acc-101", "grupo":"Accesorios", "serial":"MS-001", "tipo":"mouse", "marca":"Logitech", "estado":"Operativo", "ubicacion":"Cali - Sede 1" },
+  { "id":"acc-102", "grupo":"Accesorios", "serial":"KB-002", "tipo":"teclado", "marca":"Genius", "estado":"Operativo", "ubicacion":"Cali - Sede 2" },
+
+  { "id":"net-201", "grupo":"Red", "serial":"SW-24P-01", "tipo":"switch", "marca":"TP-Link", "estado":"Operativo", "ubicacion":"Cali - CPD" },
+  { "id":"net-202", "grupo":"Red", "serial":"RTR-02", "tipo":"router", "marca":"Cisco", "estado":"Operativo", "ubicacion":"Cali - CPD" }
+]
