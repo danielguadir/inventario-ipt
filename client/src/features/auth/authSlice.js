@@ -5,8 +5,8 @@ const initialState = {
   isAuthenticated: false,
   currentUserName: "",
   users: [
-    "Daniel Guadir","Yolima","Carlos","Laura","Sofía","Miguel","Ana",
-    "Julián","Marta","Andrés","Camila","Paula","Sergio","Valentina","Juan"
+    "Daniel Guadir","Patricia Gomez","Brandom Salazar","Jorge Bocanegra","Fernando Ayala","Jeison Gaviria","Stiven Bolaños",
+    "Jhon Arteaga","Lili Herrera","Marlio Perea","Juan Cuesta","Nikol Arango","Alex Losada","Julio Ruiz","Francisco Ariztizabal",
   ],
   error: null
 }

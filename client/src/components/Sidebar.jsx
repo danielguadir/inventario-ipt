@@ -8,7 +8,7 @@ export default function Sidebar(){
       <NavLink to="/app/stand">Stand de equipos</NavLink>
       <NavLink to="/app/mis">Mis solicitudes</NavLink>
       <div style={{marginTop:'auto', fontSize:12, opacity:.85}}>
-        Diseño estilo Odoo · MVP
+      IP TOTAL SOFTWARE
       </div>
     </aside>
   )
