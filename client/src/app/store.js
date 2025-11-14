@@ -3,6 +3,7 @@ import authReducer from '../features/auth/authSlice'
 import inventoryReducer from '../features/inventory/inventorySlice'
 import requestsReducer from '../features/requests/requestsSlice'
 import uiReducer from '../features/ui/uiSlice'
+import myItemsReducer from '../features/myitems/myItemsSlice'
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     inventory: inventoryReducer,
     requests: requestsReducer,
     ui: uiReducer,
+    myitems: myItemsReducer,
   }
 })
