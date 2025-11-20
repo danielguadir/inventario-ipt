@@ -4,6 +4,7 @@ import inventoryReducer from '../features/inventory/inventorySlice'
 import requestsReducer from '../features/requests/requestsSlice'
 import uiReducer from '../features/ui/uiSlice'
 import myItemsReducer from '../features/myitems/myItemsSlice'
+import notificationsReducer from '../features/notifications/notificationsSlice'
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     requests: requestsReducer,
     ui: uiReducer,
     myitems: myItemsReducer,
+    notifications: notificationsReducer,
   }
 })

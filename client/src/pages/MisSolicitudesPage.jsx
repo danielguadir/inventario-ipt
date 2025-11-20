@@ -1,11 +1,18 @@
-import { useSelector } from 'react-redux'
-import { selectMyRequests } from '../features/requests/requestsSlice'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectMyRequests, migrateRequestsPdf } from '../features/requests/requestsSlice'
 import Table from '../components/Table'
 import PdfButton from '../components/PdfButton'
 
 export default function MisSolicitudesPage(){
+  const dispatch = useDispatch()
   const user = useSelector(s => s.auth.currentUserName)
   const rows = useSelector(selectMyRequests(user))
+
+  // on mount, try to migrate any old blob URLs into data URLs
+  useEffect(()=>{
+    dispatch(migrateRequestsPdf())
+  }, [dispatch])
 
   const columns = [
     { key:'fechaISO', header:'Fecha', render:r => new Date(r.fechaISO).toLocaleString() },

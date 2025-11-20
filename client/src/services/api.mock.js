@@ -14,3 +14,9 @@ export function apiSaveRequest(req){
   all.push(req)
   localStorage.setItem(KEY, JSON.stringify(all))
 }
+
+export function apiSaveRequests(list){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(list || []))
+  }catch(e){ console.error(e) }
+}

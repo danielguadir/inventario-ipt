@@ -16,12 +16,14 @@ export default function StandPage(){
     return items.filter(i => (
       (i.serial||'').toLowerCase().includes(s) ||
       (i.marca||'').toLowerCase().includes(s) ||
+      (i.tipo||'').toLowerCase().includes(s) ||
       (i.estado||'').toLowerCase().includes(s) ||
       (i.ubicacion||'').toLowerCase().includes(s)
     ))
   }, [q, items])
 
   const columns = [
+    { key:'tipo', header:'Tipo' },
     { key:'serial', header:'Serial' },
     { key:'marca', header:'Marca' },
     { key:'disco', header:'Disco' },

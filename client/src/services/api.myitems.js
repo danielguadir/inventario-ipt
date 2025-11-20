@@ -16,3 +16,18 @@ export function myItemsSave(user, items){
   all[user] = items
   saveAll(all)
 }
+
+export function myItemsAdd(user, item){
+  const all = loadAll()
+  const arr = all[user] || []
+  arr.push(item)
+  all[user] = arr
+  saveAll(all)
+}
+
+export function myItemsRemoveFor(user, id){
+  const all = loadAll()
+  const arr = all[user] || []
+  all[user] = arr.filter(x => x.id !== id)
+  saveAll(all)
+}

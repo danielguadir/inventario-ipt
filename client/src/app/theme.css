@@ -99,3 +99,30 @@ body{
   border-bottom:1px solid #eee;
   text-align:left;
 }
+
+/* Global acceptance overlay */
+.global-check-overlay{
+  position:fixed; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none;
+}
+.global-check-card{
+  background:rgba(255,255,255,0.95); padding:24px; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,0.18);
+}
+.global-check-icon{ font-size:48px; color:green }
+
+/* Small inline check */
+.inline-check{ color:green; font-weight:700; margin-left:6px; display:inline-flex; align-items:center; justify-content:center; background:#28a745; color:#fff; padding:4px 6px; border-radius:6px }
+.inline-check.large{ padding:6px 10px; font-size:16px }
+
+/* botón sombreado / deshabilitado */
+.btn-muted{
+  background:#ddd;
+  color:#666;
+  pointer-events:none;
+  box-shadow: none;
+}
+
+/* Admin tabs */
+.admin-tabs{ display:flex; gap:8px; margin-bottom:12px }
+.admin-tab{ padding:8px 12px; border-radius:8px; background:#eee; cursor:pointer }
+.admin-tab.active{ background:var(--brand-1); color:white }
+

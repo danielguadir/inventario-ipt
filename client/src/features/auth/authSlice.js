@@ -40,10 +40,17 @@ const authSlice = createSlice({
       state.currentRole = "guest"
       state.error = null
     }
+    ,
+    addUser: (state, { payload: user }) => {
+      if(!state.users.includes(user)) state.users.push(user)
+    },
+    removeUser: (state, { payload: user }) => {
+      state.users = state.users.filter(u => u !== user)
+    }
   }
 })
 
-export const { login, logout } = authSlice.actions
+export const { login, logout, addUser, removeUser } = authSlice.actions
 
 // Selectores útiles
 export const selectCurrentUser = s => s.auth.currentUserName
