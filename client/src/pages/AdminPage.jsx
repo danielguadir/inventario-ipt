@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addUser, selectIsAdmin } from '../features/auth/authSlice'
+import { addUser, selectIsAdmin, deleteUser } from '../features/auth/authSlice'
 import { assignItemToUser, unassignItemFromUser } from '../features/inventory/inventorySlice'
 import { updateRequestStatus } from '../features/requests/requestsSlice'
 import { selectNotifications, removeNotification } from '../features/notifications/notificationsSlice'
@@ -16,6 +16,7 @@ export default function AdminPage(){
 
   const [newUser, setNewUser] = useState('')
   const [selectedByItem, setSelectedByItem] = useState({})
+  const [openUserMenu, setOpenUserMenu] = useState('')
   const [tab, setTab] = useState('Usuarios')
 
   if(!isAdmin) return (
@@ -46,8 +47,28 @@ export default function AdminPage(){
               <input className="input" value={newUser} onChange={e=>setNewUser(e.target.value)} placeholder="Nombre usuario" />
               <button className="btn" onClick={()=>{ if(newUser.trim()){ dispatch(addUser(newUser.trim())); setNewUser('') } }}>Agregar</button>
             </div>
-            <ul>
-              {users.map(u => <li key={u}>{u}</li>)}
+            <ul style={{listStyle:'none', padding:0}}>
+              {users.map(u => (
+                <li key={u} style={{display:'flex', alignItems:'center', justifyContent:'space-between', padding:'6px 0'}}>
+                  <div>{u}</div>
+                  <div style={{position:'relative'}}>
+                    <button className="btn" onClick={()=>setOpenUserMenu(openUserMenu === u ? '' : u)}>Acciones ▾</button>
+                    {openUserMenu === u && (
+                      <div style={{position:'absolute', right:0, marginTop:6, background:'#fff', border:'1px solid #ddd', borderRadius:6, padding:6, zIndex:10}}>
+                        <div style={{display:'flex', flexDirection:'column', gap:6}}>
+                          <button className="btn" onClick={()=>{
+                            setOpenUserMenu('')
+                            if(window.confirm(`¿Seguro que quieres eliminar al usuario ${u}?`)){
+                              dispatch(deleteUser(u))
+                            }
+                          }}>Eliminar</button>
+                          <button className="btn" onClick={()=>setOpenUserMenu('')}>Cancelar</button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </li>
+              ))}
             </ul>
           </div>
         )}
@@ -126,12 +147,27 @@ export default function AdminPage(){
                     <div>Por: {r.userName} · Fecha: {new Date(r.fechaISO).toLocaleString()} · Estado: {r.status || 'pendiente'}</div>
                   </div>
                   <div style={{display:'flex', gap:8}}>
-                    <button className="btn" onClick={()=>{
-                      dispatch(updateRequestStatus({ id: r.id, status: 'approved' }))
-                      const found = items.find(i => i.serial === r.serial)
-                      if(found) dispatch(assignItemToUser({ id: found.id, user: r.userName }))
-                    }}>Aprobar</button>
-                    <button className="btn" onClick={()=>dispatch(updateRequestStatus({ id: r.id, status: 'rejected' }))}>Rechazar</button>
+                    {(() => {
+                      const isApproved = r.status === 'approved'
+                      const isRejected = r.status === 'rejected'
+                      if (isApproved) {
+                        return <button className="btn" disabled style={{opacity:0.8}}>Aprobado</button>
+                      }
+                      if (isRejected) {
+                        return <button className="btn" disabled style={{opacity:0.8}}>Rechazado</button>
+                      }
+                      // estado pendiente (o undefined): mostrar ambas opciones
+                      return (
+                        <>
+                          <button className="btn" onClick={() => {
+                            dispatch(updateRequestStatus({ id: r.id, status: 'approved' }))
+                            const found = items.find(i => i.serial === r.serial)
+                            if (found) dispatch(assignItemToUser({ id: found.id, user: r.userName }))
+                          }}>Aprobar</button>
+                          <button className="btn" onClick={() => dispatch(updateRequestStatus({ id: r.id, status: 'rejected' }))}>Rechazar</button>
+                        </>
+                      )
+                    })()}
                   </div>
                 </div>
               ))}

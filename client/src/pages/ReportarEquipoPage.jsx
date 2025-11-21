@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Select, Input, Textarea } from '../components/FormControls'
 import { REQUEST_TYPES, MAX_FAILA_LEN } from '../app/constants'
 import { createRequest } from '../features/requests/requestsSlice'
@@ -89,15 +90,15 @@ export default function ReportarEquipoPage(){
           <div style={{gridColumn:'1/-1', display:'flex', gap:8, alignItems:'center'}}>
             <button className={`btn ${submitting ? 'btn-muted' : ''}`} type="submit" disabled={submitting}>{submitting ? 'Enviando...' : 'Reportar'}</button>
 
-            {req ? (
+            {req && req.userName === user ? (
               req.status === 'approved' ? (
-                <PdfButton blobUrl={req.pdfBlobUrl} fileName={`solicitud_${req.id}.pdf`} />
+                <div>
+                  <Link to="/app/mis" style={{color:'#06c', textDecoration:'underline'}}>descarga deultima solicitud siponible en solicitudes</Link>
+                </div>
               ) : (
-                <PdfButton disabled fileName={`solicitud_${req.id}.pdf`} />
+                <div style={{color:'#666'}}>Esperando a que el admin revise el reporte</div>
               )
             ) : null}
-
-            {req && req.status === 'approved' && <Check small />}
           </div>
         </form>
       </div>

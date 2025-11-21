@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { AUTH_PASSWORD } from '../../app/constants'
+import { unassignItemFromUser } from '../inventory/inventorySlice'
+import { removeNotification } from '../notifications/notificationsSlice'
 
 // 👇 Mapa de roles (solo estos dos serán admin)
 const ROLES = {
@@ -51,6 +53,35 @@ const authSlice = createSlice({
 })
 
 export const { login, logout, addUser, removeUser } = authSlice.actions
+
+// Thunk: eliminar usuario y limpiar referencias en inventario y notificaciones
+export const deleteUser = (user) => (dispatch, getState) => {
+  if(!user) return
+  // Desasignar todos los items asignados a este usuario
+  const items = getState().inventory?.items || []
+  items.forEach(it => {
+    if(it.assignedTo === user){
+      dispatch(unassignItemFromUser({ id: it.id, user }))
+    }
+  })
+
+  // Eliminar notificaciones relacionadas con el usuario
+  const notifs = getState().notifications?.list || []
+  notifs.forEach(n => {
+    if(n.user === user){
+      dispatch(removeNotification(n.id))
+    }
+  })
+
+  // Si el usuario está autenticado actualmente, cerrar sesión
+  const current = getState().auth?.currentUserName
+  if(current === user){
+    dispatch(logout())
+  }
+
+  // Finalmente, eliminar de la lista de usuarios
+  dispatch(removeUser(user))
+}
 
 // Selectores útiles
 export const selectCurrentUser = s => s.auth.currentUserName

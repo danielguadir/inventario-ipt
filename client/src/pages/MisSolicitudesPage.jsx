@@ -19,7 +19,11 @@ export default function MisSolicitudesPage(){
     { key:'tipo', header:'Tipo', render:r => r.otroNombre ? `${r.tipo} (${r.otroNombre})` : r.tipo },
     { key:'serial', header:'Serial' },
     { key:'falla', header:'Falla' },
-    { key:'acciones', header:'Acciones', render:r => <PdfButton blobUrl={r.pdfBlobUrl} fileName={`solicitud_${r.id}.pdf`}/> }
+    { key:'acciones', header:'Acciones', render:r => (
+      r.status === 'approved'
+        ? <PdfButton blobUrl={r.pdfBlobUrl} fileName={`solicitud_${r.id}.pdf`} />
+        : <PdfButton disabled fileName={`solicitud_${r.id}.pdf`} />
+    ) }
   ]
 
   return (
